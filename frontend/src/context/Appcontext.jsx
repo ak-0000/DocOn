@@ -13,7 +13,6 @@ const AppContextProvider = (props) => {
     localStorage.getItem("token") ? localStorage.getItem("token") : false
   );
   const [userData, setUserData] = useState(false);
-  const {userId} = userData?._Id || false
 
   const loadUserProfileData = async () => {
     try {
@@ -54,7 +53,6 @@ const AppContextProvider = (props) => {
     setUserData,
     userData,
     loadUserProfileData,
-    userId
   };
 
   useEffect(() => {

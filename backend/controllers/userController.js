@@ -22,8 +22,8 @@ const registerUser = async (req, res) => {
       return res.json({ success: false, message: "enter a strong password" });
     }
 
-    const salt = await bycrpt.genSalt(10);
-    const hashedPassword = await bycrpt.hash(password, salt);
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
     const userData = {
       name,
       email,
@@ -52,7 +52,7 @@ const loginUser = async (req, res) => {
       return res.json({ success: false, message: "user does not exist" });
     }
 
-    const isMatch = await bycrpt.compare(password, user.password);
+    const isMatch = await bcrypt.compare(password, user.password);
     // checking if the password is correct or not
     if (isMatch) {
       const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
@@ -117,33 +117,35 @@ const updateProfile = async (req, res) => {
 
 // api to book appointment
 
-const bookAppointment = async (req, res) => {
+const bookAppointment = async (req , res) => {
   try {
-    const { userId, docId, slotDate, slotTime } = req.body;
-    console.log(req.body);
+    const userId = req.user.id;
+    const { docId, slotDate, slotTime } = req.body;
+    console.log(req.body)
     const docData = await doctorModel.findById(docId).select("-password");
 
     if (!docData.available) {
       return res.json({ success: false, message: "Doctor not Avaialable " });
     }
 
-    let slots_booked = docData.slots_booked || {};
+    let slotsBooked = docData.slotsBooked;
+
 
     // checking for slots availablity
-    if (slots_booked[slotDate]) {
-      if (slots_booked[slotDate].includes(slotTime)) {
+    if (slotsBooked[slotDate]) {
+      if (slotsBooked[slotDate].includes(slotTime)) {
         return res.json({ success: false, message: "Slot not Avaialable " });
       } else {
-        slots_booked[slotDate].push(slotTime);
+        slotsBooked[slotDate].push(slotTime);
       }
     } else {
-      slots_booked[slotDate] = [];
-      slots_booked[slotDate].push(slotTime);
+      slotsBooked[slotDate] = [];
+      slotsBooked[slotDate].push(slotTime);
     }
 
     const userData = await userModel.findById(userId).select("-password");
 
-    delete docData.slots_booked;
+    delete docData.slotsBooked;
 
     const appointmentData = {
       userId,
@@ -155,16 +157,18 @@ const bookAppointment = async (req, res) => {
       slotDate,
       date: Date.now(),
     };
-    const newAppointment = new appointmentModel(appointmentData);
-    await newAppointment.save();
+    const newAppointment  = new appointmentModel(appointmentData)
+    await newAppointment.save()
 
-    // save new slots data in doctors data
-    await doctorModel.findByIdAndUpdate(docId, { slots_booked });
-    res.json({ success: true, message: "Appointment Booked" });
+    // save new slots data in doctors data 
+    await doctorModel.findByIdAndUpdate(docId,{slotsBooked})
+    res.json({success:true , message:"Appointment Booked"})
+
+
   } catch (error) {
     console.log(error);
     res.json({ success: false, message: error.message });
   }
 };
 
-export { registerUser, loginUser, getProfile, updateProfile, bookAppointment };
+export { registerUser, loginUser, getProfile, updateProfile , bookAppointment};

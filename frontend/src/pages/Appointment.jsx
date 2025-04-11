@@ -8,15 +8,8 @@ import axios from "axios";
 
 const Appointment = () => {
   const { docId } = useParams();
-  const {
-    doctors,
-    currencySymbol,
-    token,
-    BACKEND_URL,
-    getDoctorsData,
-    userData,
-    userId
-  } = useContext(AppContext);
+  const { doctors, currencySymbol, token, BACKEND_URL, getDoctorsData } =
+    useContext(AppContext);
   const navigate = useNavigate();
 
   const [docInfo, setDocInfo] = useState(null);
@@ -32,8 +25,8 @@ const Appointment = () => {
   };
 
   const getAvailableSlot = async () => {
+    if(!docInfo) return;
     let today = new Date();
-    let slots = [];
 
     for (let i = 0; i < 7; i++) {
       let currentDate = new Date(today);
@@ -59,19 +52,27 @@ const Appointment = () => {
           hour: "2-digit",
           minute: "2-digit",
         });
+        let day = currentDate.getDate()
+        let month = currentDate.getMonth()+1
+        let year = currentDate.getFullYear()
 
-        timeSlots.push({
-          datetime: new Date(currentDate),
-          time: formattedTime,
-        });
 
+        const slotDate = day + "_" + month + "_" + year;
+        const slotTime = formattedTime
+
+        const isSlotAvailable = docInfo.slotsBooked[slotDate] && docInfo.slotsBooked[slotDate].includes(slotTime) ? false : true 
+
+        if(isSlotAvailable){
+          timeSlots.push({
+            datetime: new Date(currentDate),
+            time: formattedTime,
+          });
+
+        }
         currentDate.setMinutes(currentDate.getMinutes() + 30);
       }
-
-      slots.push(timeSlots);
+      setDocSlot((prev) => [...prev, timeSlots]); // Update state once
     }
-
-    setDocSlot(slots); // Update state once
   };
 
   const bookAppointment = async () => {
@@ -81,16 +82,17 @@ const Appointment = () => {
     }
     try {
       const date = docSlot[slotIndex][0].datetime;
+      console.log(date)
 
       let day = date.getDate();
-      let month = date.getMonth() + 1;
+      let month = date.getMonth()+1;
       let year = date.getFullYear();
 
       const slotDate = day + "_" + month + "_" + year;
       console.log(BACKEND_URL);
       const { data } = await axios.post(
         BACKEND_URL + "/api/user/book-appointment",
-        { docId, slotDate, slotTime, userData ,userId},
+        { docId, slotDate, slotTime },
         { headers: { token } }
       );
       if (data.success) {
@@ -107,13 +109,12 @@ const Appointment = () => {
   };
 
   useEffect(() => {
-    const fetchData = async () => {
-      await fetchDocInfo();
-      getAvailableSlot();
-    };
-
-    fetchData();
+    fetchDocInfo();
   }, [docId, doctors]); // Runs only when docId or doctors change
+
+  useEffect(() => {
+    getAvailableSlot();
+  }, [docInfo]);
 
   useEffect(() => {
     console.log("Updated Slots:", docSlot);
