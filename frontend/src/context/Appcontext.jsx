@@ -13,6 +13,7 @@ const AppContextProvider = (props) => {
     localStorage.getItem("token") ? localStorage.getItem("token") : false
   );
   const [userData, setUserData] = useState(false);
+  const {userId} = userData?._Id || false
 
   const loadUserProfileData = async () => {
     try {
@@ -36,7 +37,7 @@ const AppContextProvider = (props) => {
       const { data } = await axios.get(BACKEND_URL + "/api/doctor/list");
       if (data.success) {
         setDoctors(data.doctors);
-        console.log(data.doctors);
+        // console.log(data.doctors);
       }
     } catch (error) {
       console.log(error);
@@ -45,6 +46,7 @@ const AppContextProvider = (props) => {
   };
   const value = {
     doctors,
+    getDoctorsData , 
     currencySymbol,
     token,
     setToken,
@@ -52,6 +54,7 @@ const AppContextProvider = (props) => {
     setUserData,
     userData,
     loadUserProfileData,
+    userId
   };
 
   useEffect(() => {

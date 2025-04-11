@@ -1,6 +1,5 @@
 import React, { useContext } from 'react'
 import {AppContext} from '../context/Appcontext'
-import { assets } from '../assets/assets'
 
 
 const Myappointments = () => {
