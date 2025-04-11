@@ -117,11 +117,11 @@ const updateProfile = async (req, res) => {
 
 // api to book appointment
 
-const bookAppointment = async (req , res) => {
+const bookAppointment = async (req, res) => {
   try {
     const userId = req.user.id;
     const { docId, slotDate, slotTime } = req.body;
-    console.log(req.body)
+    console.log(req.body);
     const docData = await doctorModel.findById(docId).select("-password");
 
     if (!docData.available) {
@@ -129,7 +129,6 @@ const bookAppointment = async (req , res) => {
     }
 
     let slotsBooked = docData.slotsBooked;
-
 
     // checking for slots availablity
     if (slotsBooked[slotDate]) {
@@ -157,18 +156,35 @@ const bookAppointment = async (req , res) => {
       slotDate,
       date: Date.now(),
     };
-    const newAppointment  = new appointmentModel(appointmentData)
-    await newAppointment.save()
+    const newAppointment = new appointmentModel(appointmentData);
+    await newAppointment.save();
 
-    // save new slots data in doctors data 
-    await doctorModel.findByIdAndUpdate(docId,{slotsBooked})
-    res.json({success:true , message:"Appointment Booked"})
-
-
+    // save new slots data in doctors data
+    await doctorModel.findByIdAndUpdate(docId, { slotsBooked });
+    res.json({ success: true, message: "Appointment Booked" });
   } catch (error) {
     console.log(error);
     res.json({ success: false, message: error.message });
   }
 };
 
-export { registerUser, loginUser, getProfile, updateProfile , bookAppointment};
+const showAppointment = async (req, res) => {
+  const userId = req.user.id;
+
+  try {
+    const appointments = await appointmentModel.find({ userId });
+
+    return res.json({ success: true, appointments });
+  } catch (error) {
+    res.json({ success: false, message: error.message });
+  }
+};
+
+export {
+  registerUser,
+  loginUser,
+  getProfile,
+  updateProfile,
+  bookAppointment,
+  showAppointment,
+};
