@@ -1,7 +1,6 @@
 import axios from "axios";
 import { createContext, useState } from "react";
-import {toast} from 'react-toastify'
-
+import { toast } from "react-toastify";
 
 export const AdminContext = createContext();
 
@@ -10,6 +9,10 @@ const AdminContextProvider = (props) => {
     localStorage.getItem("aToken") ? localStorage.getItem("aToken") : ""
   );
   const [doctors, setDoctors] = useState([]);
+
+  const [appointments, setAppointments] = useState([]);
+
+  const [dashData, setDashData] = useState(false);
 
   const backend_url = import.meta.env.VITE_BACKEND_URL;
 
@@ -46,7 +49,56 @@ const AdminContextProvider = (props) => {
       }
     } catch (error) {
       toast.error(error.message);
-      
+    }
+  };
+
+  const getAllAppointments = async () => {
+    try {
+      const { data } = await axios.get(
+        backend_url + "/api/admin/appointments",
+        { headers: { aToken } }
+      );
+      if (data.success) {
+        setAppointments(data.appointments);
+      } else {
+        toast.error(data.message);
+      }
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
+
+  const cancelAppointment = async (appointmentId) => {
+    try {
+      const { data } = await axios.post(
+        backend_url + "/api/admin/cancel-appointment",
+        { appointmentId },
+        { headers: { aToken } }
+      );
+      if (data.sucess) {
+        toast.success(data.message);
+        getAllAppointments();
+      } else {
+        toast.error(data.message);
+      }
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
+
+  const getDashData = async () => {
+    try {
+      const { data } = await axios.get(backend_url + "api/admin/dashboard", {
+        headers: { aToken },
+      });
+
+      if (data.success) {
+        setDashData(data.dashData);
+      } else {
+        toast.error(data.message);
+      }
+    } catch (error) {
+      toast.error(error.message);
     }
   };
 
@@ -57,6 +109,11 @@ const AdminContextProvider = (props) => {
     getAllDoctors,
     doctors,
     changeAvailabilty,
+    getAllAppointments,
+    appointments,
+    setAppointments,
+    cancelAppointment,
+    getDashData,dashData ,setDashData
   };
 
   return (
