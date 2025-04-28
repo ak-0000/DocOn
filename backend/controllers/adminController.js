@@ -132,7 +132,7 @@ const appointmentsAdmin = async() =>
   try{
     const appointments = await appointmentModel.find({})
     
-    res.json(success:true , appointments)
+    res.json({success:true , appointments})
 
 
   }catch(error){
