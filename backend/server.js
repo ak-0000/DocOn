@@ -32,5 +32,6 @@ app.use("/api/user", userRouter);
 
 // ❌ REMOVE: app.listen(...) — Vercel doesn't need this
 // ✅ Instead, export the app as a serverless function
-export const handler = serverless(app);
+export default serverless(app);
+console.log("🚀 Backend is running in serverless mode");
 
