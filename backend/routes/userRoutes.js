@@ -1,6 +1,6 @@
 import express from 'express'
 import { getProfile, loginUser, registerUser , updateProfile  ,bookAppointment, showAppointment, cancelAppointment , paymentRazorpay, verifyRazorpay} from '../controllers/userController.js'
-import authUser from '../middleware/authuser.js';
+import authUser from '../middleware/authUser.js';
 import upload from '../middleware/multer.js';
 
 
