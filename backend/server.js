@@ -8,30 +8,29 @@ import adminRouter from "./routes/adminRoute.js";
 import doctorRouter from "./routes/doctorRoute.js";
 import userRouter from "./routes/userRoutes.js";
 
+import serverless from "serverless-http"; // ✅ NEW: Add serverless-http
 
-// app config
-
-
+// App config
 const app = express();
 
-const port = process.env.PORT || 4000;
+// Connect to DB and cloud
 connectDB();
 connect_Cloudinary();
 
-// middlewares
+// Middlewares
 app.use(express.json());
-
 app.use(cors());
 
-// api end point
+// API routes
 app.get("/", (req, res) => {
-  res.send("api working");
+  res.send("API working");
 });
 
 app.use("/api/admin", adminRouter);
 app.use("/api/doctor", doctorRouter);
 app.use("/api/user", userRouter);
 
-app.listen(port, () => {
-  console.log("server started", port);
-});
+// ❌ REMOVE: app.listen(...) — Vercel doesn't need this
+// ✅ Instead, export the app as a serverless function
+export const handler = serverless(app);
+
