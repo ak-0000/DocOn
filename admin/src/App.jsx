@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import Login from './pages/login'
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import { AdminContext } from './context/adminContext';
 import Navbar from './components/Navbar';
 import Sidebar from './components/Sidebar';
