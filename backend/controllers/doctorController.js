@@ -1,5 +1,5 @@
 import doctorModel from "../models/doctorModel.js";
-import bcrypt  , {hash}from "bcryptjs";
+import bcrypt, { hash } from "bcryptjs";
 import jwt from "jsonwebtoken";
 import appointmentModel from "../models/appointmentModel.js";
 
@@ -69,7 +69,7 @@ export const appointmentComplete = async (req, res) => {
     const appointmentData = await appointmentModel.findById(appointmentId);
 
     if (appointmentData && appointmentData.docId === docId) {
-      await appointmentModel.findByIdAndDelete(appointmentId, {
+      await appointmentModel.findByIdAndUpdate(appointmentId, {
         isCompleted: true,
       });
 
@@ -78,7 +78,6 @@ export const appointmentComplete = async (req, res) => {
       res.json({ success: false, message: "Mark Failed" });
     }
   } catch (error) {
-    toast.error(error.message);
     res.json({ success: false, message: error.message });
   }
 };
@@ -100,7 +99,6 @@ export const appointmentCancelled = async (req, res) => {
       res.json({ success: false, message: "Cancellation  Failed" });
     }
   } catch (error) {
-    toast.error(error.message);
     res.json({ success: false, message: error.message });
   }
 };
