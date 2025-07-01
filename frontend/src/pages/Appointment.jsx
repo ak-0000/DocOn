@@ -141,8 +141,12 @@ const Appointment = () => {
               <img className="w-5" src={assets.verified_icon} alt="Verified" />
             </p>
             <div className="flex items-center gap-2 text-sm text-gray-600 mt-1">
-              <p>{docInfo.degree} - {docInfo.speciality}</p>
-              <span className="py-0.5 px-2 border text-xs rounded-full">{docInfo.experience}</span>
+              <p>
+                {docInfo.degree} - {docInfo.speciality}
+              </p>
+              <span className="py-0.5 px-2 border text-xs rounded-full">
+                {docInfo.experience}
+              </span>
             </div>
             <div>
               <p className="flex items-center gap-1 text-sm font-medium text-gray-900 mt-3">
@@ -153,7 +157,11 @@ const Appointment = () => {
               </p>
             </div>
             <p className="text-gray-500 font-md mt-4">
-              Appointment fee: <span className="text-gray-600">{currencySymbol}{docInfo.fee}</span>
+              Appointment fee:{" "}
+              <span className="text-gray-600">
+                {currencySymbol}
+                {docInfo.fee}
+              </span>
             </p>
           </div>
         </div>
@@ -203,7 +211,9 @@ const Appointment = () => {
             onClick={bookAppointment}
             disabled={!slotTime}
             className={`mt-6 px-14 py-3 rounded-full text-sm font-light ${
-              slotTime ? "bg-primary text-white" : "bg-gray-300 text-gray-600 cursor-not-allowed"
+              slotTime
+                ? "bg-primary text-white"
+                : "bg-gray-300 text-gray-600 cursor-not-allowed"
             }`}
           >
             Book an appointment

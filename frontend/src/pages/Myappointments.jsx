@@ -36,7 +36,7 @@ const Myappointments = () => {
     try {
       const { data } = await axios.get(
         BACKEND_URL + "/api/user/my-appointments",
-        { headers: { token } , withCredentials: true }
+        { headers: { token } }
       );
       console.log(data);
       if (data.success) {
@@ -56,7 +56,6 @@ const Myappointments = () => {
         { appointmentId },
         {
           headers: { token },
-          withCredentials: true,
         }
       );
       if (data.success) {
@@ -72,7 +71,7 @@ const Myappointments = () => {
     }
   };
 
-  const initPay = async(order) => {
+  const initPay = async (order) => {
     const options = {
       key: import.meta.env.VITE_RAZORPAY_KEY_ID,
       amout: order.amount,
@@ -88,7 +87,7 @@ const Myappointments = () => {
           const { data } = await axios.post(
             BACKEND_URL + "/api/user/verifyRazorpay",
             response,
-            { headers: { token }, withCredentials: true }
+            { headers: { token } }
           );
           if (data.success) {
             getAppointments();
@@ -109,7 +108,7 @@ const Myappointments = () => {
       const { data } = await axios.post(
         BACKEND_URL + "/api/user/payment-razorpay",
         { appointmentId },
-        { headers: { token }, withCredentials: true }
+        { headers: { token } }
       );
 
       if (data.success) {
@@ -145,7 +144,7 @@ const Myappointments = () => {
                 alt="Doctor"
               />
             </div>
-  
+
             <div className="flex-1 text-sm text-zinc-600">
               <p className="text-neutral-800 font-semibold">
                 {item?.docData?.name}
@@ -161,26 +160,26 @@ const Myappointments = () => {
                 {slotDateFormat(item?.slotDate)} | {item?.slotTime}
               </p>
             </div>
-  
+
             <div className="flex flex-col gap-2 justify-end">
               {item?.isCompleted && (
                 <button className="sm:min-w-48 py-2 border border-green-500 rounded text-green-500">
                   Appointment Completed
                 </button>
               )}
-  
+
               {!item?.isCompleted && item?.cancel && (
                 <button className="sm:min-w-48 py-2 border border-red-500 rounded text-red-500  mb-9">
                   Appointment Cancelled
                 </button>
               )}
-  
+
               {!item?.isCompleted && !item?.cancel && item?.payment && (
                 <button className="sm:min-w-48 py-2 border rounded text-white bg-green-500 mb-9">
                   Paid
                 </button>
               )}
-  
+
               {!item?.isCompleted && !item?.cancel && !item?.payment && (
                 <>
                   <button
@@ -189,7 +188,7 @@ const Myappointments = () => {
                   >
                     Pay here
                   </button>
-  
+
                   <button
                     onClick={() => cancelAppointment(item._id)}
                     className="text-sm text-center text-stone-500 sm:min-w-48 py-2 border rounded hover:bg-red-600 hover:text-white transition-all duration-300"
@@ -204,7 +203,6 @@ const Myappointments = () => {
       </div>
     </div>
   );
-  
 };
 
 export default Myappointments;
