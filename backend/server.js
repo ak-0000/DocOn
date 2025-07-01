@@ -21,7 +21,18 @@ connect_Cloudinary();
 // middlewares
 app.use(express.json());
 
-app.use(cors());
+
+const allowedOrigins = [
+  "https://docon-ui.onrender.com/", // ✅ your frontend domain
+];
+
+app.use(
+  cors({
+    origin: allowedOrigins,
+    credentials: true, // ✅ Allow cookies/headers
+  })
+);
+
 
 // api end point
 app.get("/", (req, res) => {

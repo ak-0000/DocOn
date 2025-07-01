@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from "react";
-import { AdminContext } from "../../context/AdminContext";
+import { AdminContext } from "../../context/adminContext";
 import { AppContext } from "../../context/AppContext";
 import { assets } from "../../assets/assets";
 import { cancelAppointment } from "../../../../backend/controllers/userController";
@@ -55,7 +55,9 @@ const AllAppointments = () => {
             </p>
             {item.cancel ? (
               <p className="tex-red-400 text-xs font-medium">Cancelled</p>
-            ) : item.isCompleted ? <p className="tex-gray-500 text-xs font-medium">Completed</p> : (
+            ) : item.isCompleted ? (
+              <p className="tex-gray-500 text-xs font-medium">Completed</p>
+            ) : (
               <img
                 onClick={() => cancelAppointment(item._id)}
                 className="w-10 cursor-pointer"

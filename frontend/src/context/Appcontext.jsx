@@ -18,10 +18,11 @@ const AppContextProvider = (props) => {
     try {
       const { data } = await axios.get(BACKEND_URL + "/api/user/get-profile", {
         headers: { token },
+        withCredentials: true,
       });
       if (data.success) {
         setUserData(data.userData);
-        console.log(userData)
+        console.log(userData);
       } else {
         toast.error(data.message);
       }
@@ -33,7 +34,7 @@ const AppContextProvider = (props) => {
 
   const getDoctorsData = async () => {
     try {
-      const { data } = await axios.get(BACKEND_URL + "/api/doctor/list");
+      const { data } = await axios.get(BACKEND_URL + "/api/doctor/list" , {withCredentials: true});
       if (data.success) {
         setDoctors(data.doctors);
         // console.log(data.doctors);
@@ -45,7 +46,7 @@ const AppContextProvider = (props) => {
   };
   const value = {
     doctors,
-    getDoctorsData , 
+    getDoctorsData,
     currencySymbol,
     token,
     setToken,

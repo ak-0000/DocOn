@@ -28,7 +28,8 @@ const Myprofile = () => {
       const { data } = await axios.post(
         BACKEND_URL + "/api/user/update-profile",
         formData,
-        { headers: { token } }
+        { headers: { token },
+          withCredentials: true },
       );
 
       if (data.success) {

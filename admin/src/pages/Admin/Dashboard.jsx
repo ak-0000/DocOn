@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from "react";
-import { AdminContext } from "../../context/AdminContext";
+import { AdminContext } from "../../context/adminContext";
 import { assets } from "../../assets/assets";
 import { AppContext } from "../../context/AppContext";
 
