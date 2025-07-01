@@ -16,10 +16,6 @@ app.use(cors({
   methods: ["GET", "POST", "PUT", "DELETE"]
 }));
 
-// ✅ Optional: Handle preflight requests (safe)
-app.options("*", cors({
-  origin: "https://docon-ui.onrender.com"
-}));
 
 // ✅ Connect to DB and Cloudinary
 connectDB();
