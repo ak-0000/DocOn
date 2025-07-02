@@ -5,7 +5,7 @@ import react from '@vitejs/plugin-react';
 export default defineConfig({
   optimizeDeps: {
     exclude: ['mock-aws-s3', 'aws-sdk', 'nock']
-  },
+  }, 
   build: {
     rollupOptions: {
       external: ['mock-aws-s3', 'aws-sdk', 'nock']
