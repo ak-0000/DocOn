@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import Login from "./pages/login";
+import Login from "./pages/Login"; // ✅ Correct
 import { ToastContainer } from "react-toastify";
 import { AdminContext } from "./context/adminContext";
 import Navbar from "./components/Navbar";
