@@ -14,9 +14,14 @@ const DoctorContextProvider = (props) => {
 
   const getAppointments = async () => {
     try {
-      const { data } = await axios.get(`${backend_url}/api/doctor/appointments`, {
-        headers: { dToken },
-      });
+      const { data } = await axios.get(
+        `${backend_url}/api/doctor/appointments`,
+        {
+          headers: {
+            Authorization: `Bearer ${dToken}`,
+          },
+        }
+      );
 
       if (data.success) {
         setAppointments(data.appointments);
@@ -33,7 +38,11 @@ const DoctorContextProvider = (props) => {
       const { data } = await axios.post(
         `${backend_url}/api/doctor/complete-appointment`,
         { appointmentId },
-        { headers: { dToken } }
+        {
+          headers: {
+            Authorization: `Bearer ${dToken}`,
+          },
+        }
       );
 
       if (data.success) {
@@ -52,7 +61,11 @@ const DoctorContextProvider = (props) => {
       const { data } = await axios.post(
         `${backend_url}/api/doctor/cancelled-appointment`,
         { appointmentId },
-        { headers: { dToken } }
+        {
+          headers: {
+            Authorization: `Bearer ${dToken}`,
+          },
+        }
       );
 
       if (data.success) {
@@ -69,8 +82,11 @@ const DoctorContextProvider = (props) => {
   const getDashData = async () => {
     try {
       const { data } = await axios.get(`${backend_url}/api/doctor/dashboard`, {
-        headers: { dToken },
+        headers: {
+          Authorization: `Bearer ${dToken}`,
+        },
       });
+
       if (data.success) {
         setDashData(data.dashData);
       } else {
@@ -84,11 +100,43 @@ const DoctorContextProvider = (props) => {
   const getProfileData = async () => {
     try {
       const { data } = await axios.get(`${backend_url}/api/doctor/profile`, {
-        headers: { dToken },
+        headers: {
+          Authorization: `Bearer ${dToken}`,
+        },
       });
+
       if (data.success) {
         setProfileData(data.profileData);
         console.log(data.profileData);
+      } else {
+        toast.error(data.message);
+      }
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
+
+  const updateProfile = async () => {
+    try {
+      const updateData = {
+        address: profileData.address,
+        fees: profileData.fee,
+        available: profileData.available,
+      };
+
+      const { data } = await axios.post(
+        `${backend_url}/api/doctor/update-profile`,
+        updateData,
+        {
+          headers: {
+            Authorization: `Bearer ${dToken}`, // ✅ Correct header here
+          },
+        }
+      );
+
+      if (data.success) {
+        toast.success(data.message);
+        getProfileData();
       } else {
         toast.error(data.message);
       }
@@ -112,6 +160,7 @@ const DoctorContextProvider = (props) => {
     profileData,
     setProfileData,
     getProfileData,
+    updateProfile, // ✅ expose updateProfile function
   };
 
   return (

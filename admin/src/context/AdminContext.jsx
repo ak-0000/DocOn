@@ -19,7 +19,7 @@ const AdminContextProvider = (props) => {
   const getAllDoctors = async () => {
     try {
       const { data } = await axios.post(
-        backend_url + "/api/admin/list",
+        backend_url + "/api/admin/all-doctors",
         {},
         { headers: { aToken } }
       );
@@ -75,9 +75,10 @@ const AdminContextProvider = (props) => {
         { appointmentId },
         { headers: { aToken } }
       );
-      if (data.sucess) {
+      if (data.success) {
         toast.success(data.message);
         getAllAppointments();
+        getDashData();          // ✅ ADD this line
       } else {
         toast.error(data.message);
       }
@@ -88,7 +89,7 @@ const AdminContextProvider = (props) => {
 
   const getDashData = async () => {
     try {
-      const { data } = await axios.get(backend_url + "api/admin/dashboard", {
+      const { data } = await axios.get(backend_url + "/api/admin/dashboard", {
         headers: { aToken },
       });
 

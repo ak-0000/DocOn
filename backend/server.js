@@ -1,7 +1,6 @@
 import "dotenv/config";
 import express from "express";
 import cors from "cors";
-
 import connectDB from "./config/mongodb.js";
 import connect_Cloudinary from "./config/cloudinary.js";
 import adminRouter from "./routes/adminRoute.js";
@@ -11,11 +10,24 @@ import userRouter from "./routes/userRoutes.js";
 const app = express();
 
 // ✅ CORS setup (no credentials needed)
-app.use(cors({
-  origin: "https://docon-ui.onrender.com",
-  methods: ["GET", "POST", "PUT", "DELETE"]
-}));
+const allowedOrigins = [
+  "http://localhost:5173", // Vite default
+  "http://localhost:5174", // your current frontend
+  "https://docon-ui.onrender.com", // production
+];
 
+app.use(
+  cors({
+    origin: function (origin, callback) {
+      // Allow requests with no origin (like curl/postman) or from allowed list
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+  })
+);
 
 // ✅ Connect to DB and Cloudinary
 connectDB();

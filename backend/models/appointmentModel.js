@@ -1,12 +1,12 @@
 import mongoose from "mongoose";
 
 const appointmentSchema = new mongoose.Schema({
-  userId: { type: String, required: true },
-  docId: { type: String, required: true },
+  userId: { type: mongoose.Schema.Types.ObjectId, ref: "users", required: true }, // ✅ fixed
+  docId: { type: mongoose.Schema.Types.ObjectId, ref: "doctors", required: true }, // optional: helpful for future populate
   slotDate: { type: String, required: true },
   slotTime: { type: String, required: true },
-  userData: { type: Object, required: true },
-  docData: { type: Object, required: true },
+  userData: { type: Object, required: true },  // optional; can be removed if you use populate
+  docData: { type: Object, required: true },   // optional
   amount: { type: Number, required: true },
   date: { type: Number, required: true },
   cancel: { type: Boolean, default: false },
@@ -17,4 +17,5 @@ const appointmentSchema = new mongoose.Schema({
 const appointmentModel =
   mongoose.models.appointment ||
   mongoose.model("appointment", appointmentSchema);
+
 export default appointmentModel;
