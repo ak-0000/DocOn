@@ -38,7 +38,11 @@ const Dashboard = () => {
             </div>
           </div>
           <div className="flex items-center gap-2 bg-white p-4 min-w-52 rounded border-2 border-gray-100 cursor-pointer hover:scale-105 transition-all">
-            <img className="w-14" src={assets.appointment_icon} alt="Appointment Icon" />
+            <img
+              className="w-14"
+              src={assets.appointment_icon}
+              alt="Appointment Icon"
+            />
             <div>
               <p className="text-xl font-semibold text-gray-600">
                 {dashData.appointments}
@@ -47,7 +51,11 @@ const Dashboard = () => {
             </div>
           </div>
           <div className="flex items-center gap-2 bg-white p-4 min-w-52 rounded border-2 border-gray-100 cursor-pointer hover:scale-105 transition-all">
-            <img className="w-14" src={assets.patients_icon} alt="Patients Icon" />
+            <img
+              className="w-14"
+              src={assets.patients_icon}
+              alt="Patients Icon"
+            />
             <div>
               <p className="text-xl font-semibold text-gray-600">
                 {dashData.patients}
