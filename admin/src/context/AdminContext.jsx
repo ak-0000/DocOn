@@ -52,6 +52,7 @@ const AdminContextProvider = (props) => {
     }
   };
 
+  
   const getAllAppointments = async () => {
     try {
       const { data } = await axios.get(
