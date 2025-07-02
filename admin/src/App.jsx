@@ -6,7 +6,7 @@ import Navbar from "./components/Navbar";
 import Sidebar from "./components/Sidebar";
 import { Route, Routes } from "react-router-dom";
 import Dashboard from "./pages/Admin/Dashboard";
-import AllAppointments from "./pages/admin/AllAppointments";
+import AllAppointments from "./pages/Admin/AllAppointments"; 
 import AddDoctor from "./pages/Admin/AddDoctor";
 import Doctorlist from "./pages/Admin/Doctorslist";
 import { DoctorContext } from "./context/DoctorContext";
