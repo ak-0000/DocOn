@@ -11,9 +11,8 @@ const app = express();
 
 // ✅ CORS setup (no credentials needed)
 const allowedOrigins = [
-  "http://localhost:5173", // Vite default
-  "http://localhost:5174", // your current frontend
   "https://docon-ui.onrender.com", // production
+  "https://doc-admin-u6wt.onrender.com", // admin production
 ];
 
 app.use(
