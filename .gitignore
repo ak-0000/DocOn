@@ -2,13 +2,18 @@
 # 🔧 Common Settings
 # -------------------------------
 node_modules/
-.env
-.env.*         
+.env        
 *.log
 .DS_Store
 *.pem
 *.key
 *.crt
+# Ignore only actual env files, not examples
+.env
+.env.local
+.env.development
+.env.production
+
 
 # --------------------------------
 # ⚙️ Backend (Node.js)
@@ -30,7 +35,7 @@ backend/logs/
 # --------------------------------
 admin/node_modules/
 admin/.env
-admin/.env.*
+admin/.env.
 admin/build/
 admin/dist/
 admin/.next/
@@ -43,7 +48,7 @@ admin/*.log
 
 frontend/node_modules/
 frontend/.env
-frontend/.env.*
+frontend/.env.
 frontend/build/
 frontend/dist/
 frontend/.next/
