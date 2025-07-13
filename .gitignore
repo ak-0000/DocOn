@@ -3,7 +3,7 @@
 # -------------------------------
 node_modules/
 .env
-.env.*          # .env.development, .env.production etc.
+.env.*         
 *.log
 .DS_Store
 *.pem
@@ -36,6 +36,19 @@ admin/dist/
 admin/.next/
 admin/coverage/
 admin/*.log
+
+# --------------------------------
+# 🛠️ frontend Panel (React or Vite)
+# --------------------------------
+
+frontend/node_modules/
+frontend/.env
+frontend/.env.*
+frontend/build/
+frontend/dist/
+frontend/.next/
+frontend/coverage/
+frontend/*.log
 
 # Optional lockfiles (keep only one if you want)
 package-lock.json
