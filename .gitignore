@@ -1,1 +1,58 @@
-node_modules
+# -------------------------------
+# 🔧 Common Settings
+# -------------------------------
+node_modules/
+.env
+.env.*          # .env.development, .env.production etc.
+*.log
+.DS_Store
+*.pem
+*.key
+*.crt
+
+# --------------------------------
+# ⚙️ Backend (Node.js)
+# --------------------------------
+backend/node_modules/
+backend/dist/
+backend/build/
+backend/.env
+backend/uploads/
+backend/coverage/
+backend/*.log
+
+# PM2 process logs (optional)
+backend/pids/
+backend/logs/
+
+# --------------------------------
+# 🛠️ Admin Panel (React or Vite)
+# --------------------------------
+admin/node_modules/
+admin/.env
+admin/.env.*
+admin/build/
+admin/dist/
+admin/.next/
+admin/coverage/
+admin/*.log
+
+# Optional lockfiles (keep only one if you want)
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# --------------------------------
+# ⚠️ Optional System Files
+# --------------------------------
+Thumbs.db
+desktop.ini
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# --------------------------------
+# 📦 Git-Filter-Repo Backup
+# --------------------------------
+.git-filter-repo/
