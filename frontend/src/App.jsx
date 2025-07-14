@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
 import Doctors from "./pages/Doctors";
@@ -13,7 +13,24 @@ import Footer from "./components/Footer";
 import { ToastContainer } from "react-toastify";
 
 const App = () => {
+  const [backendReady, setBackendReady] = useState(false);
+
+  useEffect(() => {
+    fetch(import.meta.env.VITE_BACKEND_URL + "/")
+      .then(() => setBackendReady(true))
+      .catch(() => setBackendReady(true)); // continue even if failed
+  }, []);
+
+  if (!backendReady) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <p className="text-xl text-gray-600 animate-pulse">⏳ Loading server...</p>
+      </div>
+    );
+  }
+
   return (
+    
     <div className="mx-4 sm:mx-[10%]">
       <ToastContainer />
       <Navbar />
